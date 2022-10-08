@@ -1,6 +1,6 @@
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { Restaurant } from '../models/restaurant.model.js';
-import { RestaurantsService } from '../services/restaurant.service.js';
+import { Restaurant } from '../models/restaurant.model';
+import { RestaurantsService } from '../services/restaurant.service';
 
 @Resolver(() => Restaurant)
 export class RestaurantsResolver {
