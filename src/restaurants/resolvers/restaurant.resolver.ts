@@ -48,4 +48,11 @@ export class RestaurantsResolver {
   ) {
     return this.restaurantsService.update(id, { name, address, email, phone });
   }
+
+  @Mutation(() => Restaurant)
+  async deleteRestaurant(
+    @Args('id', { type: () => Int, nullable: true }) id: number,
+  ) {
+    return this.restaurantsService.deleteOne(id);
+  }
 }

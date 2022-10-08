@@ -54,4 +54,8 @@ export class RestaurantsService {
       data: restaurant,
     });
   }
+
+  async deleteOne(id: number) {
+    return await this.prismaService.restaurants.delete({ where: { id } });
+  }
 }
