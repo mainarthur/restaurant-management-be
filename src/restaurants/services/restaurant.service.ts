@@ -42,6 +42,9 @@ export class RestaurantsService {
       skip: page * pageSize,
       take: pageSize,
       where: generateQuery(searchTerm),
+      orderBy: {
+        id: 'desc',
+      },
     });
   }
 
