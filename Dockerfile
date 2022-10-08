@@ -1,4 +1,4 @@
-FROM node:16-alpine as base
+FROM node:16-alpine as app
 
 WORKDIR /app
 COPY package* .
@@ -6,12 +6,5 @@ RUN npm install
 COPY . .
 RUN npm run build
 
-FROM base as app
-
-ARG NODE_ENV=production
-WORKDIR /app
-COPY package* .
-RUN npm install
-COPY --from=base /app/dist/ /app/
 EXPOSE 3000
-ENTRYPOINT ["node", "main"]
+ENTRYPOINT ["node", "dist/main"]
