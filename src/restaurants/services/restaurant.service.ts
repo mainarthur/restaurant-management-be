@@ -43,4 +43,8 @@ export class RestaurantsService {
       where: query,
     });
   }
+
+  async create(restaurant: Omit<Restaurant, 'id'>) {
+    return await this.prismaService.restaurants.create({ data: restaurant });
+  }
 }
