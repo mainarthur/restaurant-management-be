@@ -37,4 +37,15 @@ export class RestaurantsResolver {
       phone,
     });
   }
+
+  @Mutation(() => Restaurant)
+  async updateRestaurant(
+    @Args('id', { type: () => Int, nullable: true }) id: number,
+    @Args('name', { nullable: true }) name?: string,
+    @Args('address', { nullable: true }) address?: string,
+    @Args('email', { nullable: true }) email?: string,
+    @Args('phone', { nullable: true }) phone?: string,
+  ) {
+    return this.restaurantsService.update(id, { name, address, email, phone });
+  }
 }

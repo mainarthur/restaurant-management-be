@@ -47,4 +47,11 @@ export class RestaurantsService {
   async create(restaurant: Omit<Restaurant, 'id'>) {
     return await this.prismaService.restaurants.create({ data: restaurant });
   }
+
+  async update(id: number, restaurant: Partial<Omit<Restaurant, 'id'>>) {
+    return await this.prismaService.restaurants.update({
+      where: { id },
+      data: restaurant,
+    });
+  }
 }
