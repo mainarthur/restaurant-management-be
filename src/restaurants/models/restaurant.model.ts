@@ -17,3 +17,12 @@ export class Restaurant {
   @Field()
   email: string;
 }
+
+@ObjectType()
+export class PaginatedRestaurants {
+  @Field(() => Int)
+  total: number;
+
+  @Field(() => [Restaurant])
+  result: Restaurant[];
+}

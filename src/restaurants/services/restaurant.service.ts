@@ -2,6 +2,34 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../../repositories/prisma/prisma.service';
 import { Restaurant } from '../models/restaurant.model';
 
+const generateQuery = (searchTerm?: string) =>
+  searchTerm
+    ? {
+        OR: [
+          {
+            name: {
+              contains: searchTerm,
+            },
+          },
+          {
+            address: {
+              contains: searchTerm,
+            },
+          },
+          {
+            phone: {
+              contains: searchTerm,
+            },
+          },
+          {
+            email: {
+              contains: searchTerm,
+            },
+          },
+        ],
+      }
+    : {};
+
 @Injectable()
 export class RestaurantsService {
   constructor(private prismaService: PrismaService) {}
@@ -10,37 +38,10 @@ export class RestaurantsService {
     pageSize = 100,
     searchTerm?: string,
   ): Promise<Restaurant[]> {
-    const query = searchTerm
-      ? {
-          OR: [
-            {
-              name: {
-                contains: searchTerm,
-              },
-            },
-            {
-              address: {
-                contains: searchTerm,
-              },
-            },
-            {
-              phone: {
-                contains: searchTerm,
-              },
-            },
-            {
-              email: {
-                contains: searchTerm,
-              },
-            },
-          ],
-        }
-      : {};
-
     return await this.prismaService.restaurants.findMany({
       skip: page * pageSize,
       take: pageSize,
-      where: query,
+      where: generateQuery(searchTerm),
     });
   }
 
@@ -57,5 +58,11 @@ export class RestaurantsService {
 
   async deleteOne(id: number) {
     return await this.prismaService.restaurants.delete({ where: { id } });
+  }
+
+  async count(searchTerm?: string) {
+    return this.prismaService.restaurants.count({
+      where: generateQuery(searchTerm),
+    });
   }
 }
